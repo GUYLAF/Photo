@@ -22,16 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = (Button) findViewById(R.id.test);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"test1 ok",Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        Button button5 = (Button) findViewById(R.id.test5);
-        button5.setOnClickListener(new View.OnClickListener() {
+        Button buttonPhoto = (Button) findViewById(R.id.buttonPhoto);
+        buttonPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,ImageActivity.class);

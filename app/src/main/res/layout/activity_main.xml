@@ -13,89 +13,18 @@
 
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/test"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:id="@+id/buttonPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@android:color/holo_orange_dark"
-            android:text="Show Toast1" />
-
-        <Button
-            android:id="@+id/test2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Picasso" />
-
-        <Button
-            android:id="@+id/test3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast3" />
-
-        <Button
-            android:id="@+id/test4"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast4" />
-
-        <Button
-            android:id="@+id/test5"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast5" />
+            android:text="Show Photo" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-
-        <Button
-            android:id="@+id/test6"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast6" />
-
-        <Button
-            android:id="@+id/test7"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast7" />
-
-        <Button
-            android:id="@+id/test8"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast8" />
-
-        <Button
-            android:id="@+id/test9"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast9" />
-
-        <Button
-            android:id="@+id/test10"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Show Toast10" />
-
-    </LinearLayout>
 </LinearLayout>
