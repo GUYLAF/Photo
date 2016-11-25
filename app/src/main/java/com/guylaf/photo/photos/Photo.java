@@ -1,4 +1,4 @@
-package com.guylaf.photo;
+package com.guylaf.photo.photos;
 
 /**
  * Created by guyla on 24/11/2016.
@@ -27,5 +27,13 @@ public class Photo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }

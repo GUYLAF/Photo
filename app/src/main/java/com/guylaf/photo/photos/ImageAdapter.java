@@ -1,4 +1,4 @@
-package com.guylaf.photo;
+package com.guylaf.photo.photos;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.guylaf.photos.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

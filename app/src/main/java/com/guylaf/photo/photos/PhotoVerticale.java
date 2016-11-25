@@ -1,10 +1,11 @@
-package com.guylaf.photo;
+package com.guylaf.photo.photos;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.guylaf.photos.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
