@@ -21,7 +21,7 @@
         <activity android:name="com.guylaf.photo.PhotoVerticale" />
 
         <service
-            android:name="com.guylaf.photo.BoundService"
+            android:name="com.guylaf.photo.MyService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

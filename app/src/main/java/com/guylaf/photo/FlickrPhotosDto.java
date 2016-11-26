@@ -1,4 +1,4 @@
-package com.guylaf.photo.flickr;
+package com.guylaf.photo;
 
 import java.util.List;
 

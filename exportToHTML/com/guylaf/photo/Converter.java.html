@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Converter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Converter.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.guylaf.photo; 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a></span><span class="s0">import </span><span class="s1">java.util.ArrayList; 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s0">import </span><span class="s1">java.util.List; 
+<a name="l5"><span class="ln">5    </span></a> 
+<a name="l6"><span class="ln">6    </span></a></span><span class="s2">/** 
+<a name="l7"><span class="ln">7    </span></a> * Created by guyla on 25/11/2016. 
+<a name="l8"><span class="ln">8    </span></a> */</span><span class="s1"> 
+<a name="l9"><span class="ln">9    </span></a> 
+<a name="l10"><span class="ln">10   </span></a></span><span class="s0">public class </span><span class="s1">Converter { 
+<a name="l11"><span class="ln">11   </span></a> 
+<a name="l12"><span class="ln">12   </span></a>        </span><span class="s0">public </span><span class="s1">List&lt;Photo&gt; convert(FlickrResponseDto response){ 
+<a name="l13"><span class="ln">13   </span></a>            List&lt;Photo&gt; convertedPhotos = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;(); 
+<a name="l14"><span class="ln">14   </span></a>            List&lt;PhotoDto&gt; photoDtos = response.getPhotos().getPhoto(); 
+<a name="l15"><span class="ln">15   </span></a> 
+<a name="l16"><span class="ln">16   </span></a>            </span><span class="s0">for </span><span class="s1">(PhotoDto photoDto : photoDtos){ 
+<a name="l17"><span class="ln">17   </span></a>                String title = photoDto.getTitle(); 
+<a name="l18"><span class="ln">18   </span></a>                </span><span class="s0">long  </span><span class="s1">farm = photoDto.getFarm(); 
+<a name="l19"><span class="ln">19   </span></a>                String server = photoDto.getServer(); 
+<a name="l20"><span class="ln">20   </span></a>                String id = photoDto.getId(); 
+<a name="l21"><span class="ln">21   </span></a>                String secret = photoDto.getSecret(); 
+<a name="l22"><span class="ln">22   </span></a>                Photo photo = </span><span class="s0">new </span><span class="s1">Photo(title, </span><span class="s3">&quot;https://farm&quot;</span><span class="s1">+farm+</span><span class="s3">&quot;.static.flickr.com/&quot;</span><span class="s1">+server+</span><span class="s3">&quot;/&quot;</span><span class="s1">+id+</span><span class="s3">&quot;_&quot;</span><span class="s1">+secret+</span><span class="s3">&quot;.jpg&quot;</span><span class="s1">); 
+<a name="l23"><span class="ln">23   </span></a>                convertedPhotos.add(photo); 
+<a name="l24"><span class="ln">24   </span></a>            } 
+<a name="l25"><span class="ln">25   </span></a>            </span><span class="s0">return </span><span class="s1">convertedPhotos; 
+<a name="l26"><span class="ln">26   </span></a>        } 
+<a name="l27"><span class="ln">27   </span></a> 
+<a name="l28"><span class="ln">28   </span></a>} 
+<a name="l29"><span class="ln">29   </span></a></span></pre>
+</body>
+</html>

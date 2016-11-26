@@ -1,4 +1,6 @@
-package com.guylaf.photo.flickr;
+package com.guylaf.photo;
+
+import com.guylaf.photo.FlickrPhotosDto;
 
 /**
  * Created by guyla on 25/11/2016.

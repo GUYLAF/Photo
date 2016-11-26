@@ -1,4 +1,4 @@
-package com.guylaf.photo.photos;
+package com.guylaf.photo;
 
 import android.content.Intent;
 import android.os.Bundle;

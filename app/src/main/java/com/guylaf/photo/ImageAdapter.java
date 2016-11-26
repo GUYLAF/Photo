@@ -1,4 +1,4 @@
-package com.guylaf.photo.photos;
+package com.guylaf.photo;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;

@@ -1,4 +1,4 @@
-package com.guylaf.photo.flickr;
+package com.guylaf.photo;
 
 /**
  * Created by guyla on 25/11/2016.
