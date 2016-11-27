@@ -8,6 +8,7 @@
 .s1 { color: rgb(0,0,0); }
 .s2 { color: rgb(128,128,128); font-style: italic; }
 .s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(0,0,255); }
 </style>
 </head>
 <BODY BGCOLOR="#ffffff">
@@ -49,14 +50,21 @@ BoundService.java</FONT>
 <a name="l30"><span class="ln">30   </span></a>    } 
 <a name="l31"><span class="ln">31   </span></a> 
 <a name="l32"><span class="ln">32   </span></a>    </span><span class="s0">public </span><span class="s1">List&lt;Photo&gt; getPhoto () { 
-<a name="l33"><span class="ln">33   </span></a>        List&lt;Photo&gt; list = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;(); 
-<a name="l34"><span class="ln">34   </span></a> 
-<a name="l35"><span class="ln">35   </span></a>        list.add(</span><span class="s0">new </span><span class="s1">Photo(</span><span class="s3">&quot;Title1&quot;</span><span class="s1">, </span><span class="s3">&quot;http://www.ecobase21.net/Paysage/Liens/Paysagesnaturels5.jpg&quot;</span><span class="s1">)); 
-<a name="l36"><span class="ln">36   </span></a>        list.add(</span><span class="s0">new </span><span class="s1">Photo(</span><span class="s3">&quot;Title2&quot;</span><span class="s1">, </span><span class="s3">&quot;http://www.unesourisetmoi.info/wallpaper_24/images/paysages-de-reve-06.jpg&quot;</span><span class="s1">)); 
-<a name="l37"><span class="ln">37   </span></a>        list.add(</span><span class="s0">new </span><span class="s1">Photo(</span><span class="s3">&quot;Title3&quot;</span><span class="s1">, </span><span class="s3">&quot;http://testeurs.callandgo.fr/wp-content/uploads/Paysage-de-neige-13.jpg&quot;</span><span class="s1">)); 
-<a name="l38"><span class="ln">38   </span></a>        </span><span class="s0">return </span><span class="s1">list; 
-<a name="l39"><span class="ln">39   </span></a>    } 
-<a name="l40"><span class="ln">40   </span></a>} 
-<a name="l41"><span class="ln">41   </span></a></span></pre>
+<a name="l33"><span class="ln">33   </span></a>        List&lt;PhotoDto&gt; listphotos = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;(); 
+<a name="l34"><span class="ln">34   </span></a>        listphotos.add(</span><span class="s0">new </span><span class="s1">PhotoDto(</span><span class="s3">&quot;28087377815&quot;</span><span class="s1">, </span><span class="s3">&quot;67221971@N06&quot;</span><span class="s1">, </span><span class="s3">&quot;80c8f2e753&quot;</span><span class="s1">, </span><span class="s3">&quot;7308&quot;</span><span class="s1">, </span><span class="s4">8</span><span class="s1">, </span><span class="s3">&quot;t1&quot;</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, </span><span class="s4">0</span><span class="s1">));</span><span class="s2">//Monde Gris</span><span class="s1"> 
+<a name="l35"><span class="ln">35   </span></a>        listphotos.add(</span><span class="s0">new </span><span class="s1">PhotoDto(</span><span class="s3">&quot;27425564203&quot;</span><span class="s1">, </span><span class="s3">&quot;67221971@N06&quot;</span><span class="s1">, </span><span class="s3">&quot;8204d2863d&quot;</span><span class="s1">, </span><span class="s3">&quot;7303&quot;</span><span class="s1">, </span><span class="s4">8</span><span class="s1">, </span><span class="s3">&quot;t2&quot;</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, </span><span class="s4">0</span><span class="s1">));</span><span class="s2">//L'Arbre Blanc</span><span class="s1"> 
+<a name="l36"><span class="ln">36   </span></a>        listphotos.add(</span><span class="s0">new </span><span class="s1">PhotoDto(</span><span class="s3">&quot;24077385539&quot;</span><span class="s1">, </span><span class="s3">&quot;67221971@N06&quot;</span><span class="s1">, </span><span class="s3">&quot;7b04e4d47a&quot;</span><span class="s1">, </span><span class="s3">&quot;1444&quot;</span><span class="s1">, </span><span class="s4">2</span><span class="s1">, </span><span class="s3">&quot;t3&quot;</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, </span><span class="s4">0</span><span class="s1">));</span><span class="s2">//Les couleurs du vent</span><span class="s1"> 
+<a name="l37"><span class="ln">37   </span></a> 
+<a name="l38"><span class="ln">38   </span></a>        FlickrPhotosDto photos = </span><span class="s0">new </span><span class="s1">FlickrPhotosDto(</span><span class="s4">1</span><span class="s1">, </span><span class="s4">30</span><span class="s1">, </span><span class="s4">5</span><span class="s1">, </span><span class="s3">&quot;147&quot;</span><span class="s1">, listphotos); 
+<a name="l39"><span class="ln">39   </span></a> 
+<a name="l40"><span class="ln">40   </span></a>        FlickrResponseDto response = </span><span class="s0">new </span><span class="s1">FlickrResponseDto(photos,</span><span class="s3">&quot;OK&quot;</span><span class="s1">); 
+<a name="l41"><span class="ln">41   </span></a> 
+<a name="l42"><span class="ln">42   </span></a>        Converter convert = </span><span class="s0">new </span><span class="s1">Converter(); 
+<a name="l43"><span class="ln">43   </span></a>        List&lt;Photo&gt; convertList = convert.convert(response); 
+<a name="l44"><span class="ln">44   </span></a> 
+<a name="l45"><span class="ln">45   </span></a>        </span><span class="s0">return </span><span class="s1">convertList; 
+<a name="l46"><span class="ln">46   </span></a>    } 
+<a name="l47"><span class="ln">47   </span></a>} 
+<a name="l48"><span class="ln">48   </span></a></span></pre>
 </body>
 </html>
