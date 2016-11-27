@@ -16,13 +16,15 @@ import android.widget.Toast;
 
 import com.guylaf.photos.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageActivity extends AppCompatActivity {
 
     private BoundService boundService;
     boolean bound = false;
-    private List<Photo> list;
+    private List<Photo> list = new ArrayList<>();
+    private List<Photo> listOne = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class ImageActivity extends AppCompatActivity {
         final ImageAdapter imageAdapter = new ImageAdapter(this);
         listView.setAdapter(imageAdapter);
 
-
+        final EditText editText = (EditText) findViewById(R.id.textPhoto);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,49 +50,65 @@ public class ImageActivity extends AppCompatActivity {
             }
         });
 
-        final EditText editText = (EditText) findViewById(R.id.textPhoto);
         Button button = (Button) findViewById(R.id.buttonPhoto);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                if (!editText.getText().toString().equals("")) {
+                    Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+                listOne.clear();
+                list.clear();
                 list = boundService.getPhoto();
-                imageAdapter.setList(list);
-                imageAdapter.notifyDataSetChanged();
-            }
+                final String photoSearch = editText.getText().toString();
+
+                for (int i = 0; i < list.size(); i++) {
+                    Photo photo = list.get(i);
+                    String title = list.get(i).getTitle();
+                    if (title.equals(photoSearch)) {
+                        listOne.add(new Photo(photo.getTitle(), photo.getUrl()));
+                        imageAdapter.setList(listOne);
+
+                        break;
+                    } else {
+                        imageAdapter.setList(list);
+                    }
+                }
+                imageAdapter.notifyDataSetChanged();            }
         });
     }
 
-        @Override
-        protected void onStart () {
-            super.onStart();
-            Intent intent = new Intent(this, BoundService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        }
-        @Override
-        protected void onStop () {
-            super.onStop();
-            if (bound) {
-                unbindService(mConnection);
-                bound = false;
-            }
-        }
-
-        private ServiceConnection mConnection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName className,
-                                           IBinder service) {
-                BoundService.ServiceBinder binder = (BoundService.ServiceBinder) service;
-                boundService = binder.getService();
-                bound = true;
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName arg0) {
-                bound = false;
-            }
-        };
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, BoundService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bound) {
+            unbindService(mConnection);
+            bound = false;
+        }
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            BoundService.ServiceBinder binder = (BoundService.ServiceBinder) service;
+            boundService = binder.getService();
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            bound = false;
+        }
+    };
+}
 
 
 

@@ -17,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.guylaf.photo.ImageActivity" />
+        <activity
+            android:name="com.guylaf.photo.ImageActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name="com.guylaf.photo.PhotoVerticale" />
 
         <service

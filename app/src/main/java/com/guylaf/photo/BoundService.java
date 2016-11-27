@@ -30,10 +30,18 @@ public class BoundService extends Service {
     }
 
     public List<Photo> getPhoto () {
-        List<Photo> list = new ArrayList<>();
-        list.add(new Photo("Title1", "http://www.ecobase21.net/Paysage/Liens/Paysagesnaturels5.jpg"));
-        list.add(new Photo("Title2", "http://www.unesourisetmoi.info/wallpaper_24/images/paysages-de-reve-06.jpg"));
-        list.add(new Photo("Title3", "http://testeurs.callandgo.fr/wp-content/uploads/Paysage-de-neige-13.jpg"));
-        return list;
+        List<PhotoDto> listphotos = new ArrayList<>();
+        listphotos.add(new PhotoDto("28087377815", "67221971@N06", "80c8f2e753", "7308", 8, "t1", 1, 0, 0));//Monde Gris
+        listphotos.add(new PhotoDto("27425564203", "67221971@N06", "8204d2863d", "7303", 8, "t2", 1, 0, 0));//L'Arbre Blanc
+        listphotos.add(new PhotoDto("24077385539", "67221971@N06", "7b04e4d47a", "1444", 2, "t3", 1, 0, 0));//Les couleurs du vent
+
+        FlickrPhotosDto photos = new FlickrPhotosDto(1, 30, 5, "147", listphotos);
+
+        FlickrResponseDto response = new FlickrResponseDto(photos,"OK");
+
+        Converter convert = new Converter();
+        List<Photo> convertList = convert.convert(response);
+
+        return convertList;
     }
 }

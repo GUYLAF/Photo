@@ -31,6 +31,10 @@ public class ImageAdapter extends BaseAdapter {
         this.list = list;
     }
 
+    public Photo getList(int position) {
+        return list.get(position);
+    }
+
     @Override
     public int getCount() {
         return list.size();
@@ -76,4 +80,5 @@ public class ImageAdapter extends BaseAdapter {
 
         return convertView;
     }
+
 }
