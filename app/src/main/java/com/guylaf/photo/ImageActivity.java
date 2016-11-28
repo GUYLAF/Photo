@@ -19,12 +19,13 @@ import com.guylaf.photos.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageActivity extends AppCompatActivity {
+public class ImageActivity extends AppCompatActivity implements InterfaceResponse {
 
     private BoundService boundService;
     boolean bound = false;
     private List<Photo> list = new ArrayList<>();
     private List<Photo> listOne = new ArrayList<>();
+    private ImageAdapter imageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,10 @@ public class ImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity);
 
         final ListView listView = (ListView) findViewById(R.id.list);
-        final ImageAdapter imageAdapter = new ImageAdapter(this);
+        imageAdapter = new ImageAdapter(this);
         listView.setAdapter(imageAdapter);
 
         final EditText editText = (EditText) findViewById(R.id.textPhoto);
-        final String query;
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -102,6 +102,7 @@ public class ImageActivity extends AppCompatActivity {
             BoundService.ServiceBinder binder = (BoundService.ServiceBinder) service;
             boundService = binder.getService();
             bound = true;
+            boundService.setInterfaceResponse(ImageActivity.this);
         }
 
         @Override
@@ -109,6 +110,12 @@ public class ImageActivity extends AppCompatActivity {
             bound = false;
         }
     };
+
+    @Override
+    public void onPhotoReceived(List<Photo> photos) {
+        imageAdapter.setList(photos);
+        imageAdapter.notifyDataSetChanged();
+    }
 }
 
 

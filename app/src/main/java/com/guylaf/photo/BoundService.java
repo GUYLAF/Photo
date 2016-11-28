@@ -28,6 +28,11 @@ public class BoundService extends Service {
     private final IBinder binder = new ServiceBinder();
     private final String URL = "https://www.flickr.com" ;
     private FlickrService service;
+    private InterfaceResponse interfaceResponse;
+
+    public void setInterfaceResponse(InterfaceResponse interfaceResponse) {
+        this.interfaceResponse = interfaceResponse;
+    }
 
     @Nullable
     @Override
@@ -73,6 +78,7 @@ public class BoundService extends Service {
                 Converter convert = new Converter();
                 List<Photo> convertList = convert.convert(response.body());
                 Log.e("onResponse :", convertList.toString());
+                interfaceResponse.onPhotoReceived(convertList);
 
             }
 
@@ -83,7 +89,6 @@ public class BoundService extends Service {
 
         });
 
-//
     }
 
 
