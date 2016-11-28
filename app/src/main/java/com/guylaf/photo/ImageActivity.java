@@ -36,6 +36,7 @@ public class ImageActivity extends AppCompatActivity {
         listView.setAdapter(imageAdapter);
 
         final EditText editText = (EditText) findViewById(R.id.textPhoto);
+        final String query;
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,7 +60,7 @@ public class ImageActivity extends AppCompatActivity {
                 }
                 listOne.clear();
                 list.clear();
-                list = boundService.getPhoto();
+                boundService.getPhoto(editText.getText().toString());
                 final String photoSearch = editText.getText().toString();
 
                 for (int i = 0; i < list.size(); i++) {
