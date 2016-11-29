@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,17 +29,50 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
     private List<Photo> list = new ArrayList<>();
     private List<Photo> listOne = new ArrayList<>();
     private ImageAdapter imageAdapter;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+//                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /**
+             * Called when a drawer has settled in a completely closed state.
+             */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                String mTitle = "Title";
+                getSupportActionBar().setTitle(mTitle);
+            }
+
+            /**
+             * Called when a drawer has settled in a completely open state.
+             */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                String mDrawerTitle = "MyDrawer";
+                getSupportActionBar().setTitle(mDrawerTitle);
+            }
+        };
+// Set the drawer toggle as the DrawerListener
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         final ListView listView = (ListView) findViewById(R.id.list);
         imageAdapter = new ImageAdapter(this);
         listView.setAdapter(imageAdapter);
 
-        final EditText editText = (EditText) findViewById(R.id.textPhoto);
+        final EditText editText = (EditText) findViewById(R.id.text_field);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -51,7 +87,7 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
             }
         });
 
-        Button button = (Button) findViewById(R.id.buttonPhoto);
+        Button button = (Button) findViewById(R.id.button_ok);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +111,11 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                         imageAdapter.setList(list);
                     }
                 }
-                imageAdapter.notifyDataSetChanged();            }
+                imageAdapter.notifyDataSetChanged();
+            }
         });
     }
+
 
     @Override
     protected void onStart() {
