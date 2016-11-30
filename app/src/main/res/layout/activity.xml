@@ -52,7 +52,7 @@
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:background="@color/colorPrimaryDark"
         android:choiceMode="singleChoice"
         android:divider="@color/colorPrimaryDark"
@@ -72,6 +72,12 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorAccent"
             android:text="history" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccent"/>
 
     </LinearLayout>
 
