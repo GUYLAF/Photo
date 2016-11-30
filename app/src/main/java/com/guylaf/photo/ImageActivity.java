@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,6 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
     private DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     private SharedPreferences prefs;
-
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -58,93 +58,19 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Drawer();
+        spinner();
+        Button buttonSearch = getButtonSearch();
+        getButtonHistory(buttonSearch);
+        final EditText editText = listView();
+        buttonOK(editText);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+// Fin onCReate **************************************************************************************************
 
-
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-//                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-        };
-
-
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-// Create an ArrayAdapter using the string array and a default spinner layout
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.spinner, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(spinnerKey, adapter.getItem(position).toString());
-                editor.commit();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        prefs = this.getPreferences(MODE_PRIVATE);
-
-        String getPrefs = prefs.getString(spinnerKey, "5");
-        spinner.setSelection(adapter.getPosition(getPrefs));
-
-
-        Button buttonSearch = (Button) findViewById(R.id.button_search);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(View v) {
-
-                                            }
-                                        }
-        );
-
-        Button buttonHistory = (Button) findViewById(R.id.button_history);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-
-
-                                            }
-                                        }
-        );
-
-
-        final ListView listView = (ListView) findViewById(R.id.list);
-        imageAdapter = new ImageAdapter(this);
-        listView.setAdapter(imageAdapter);
-
-        final EditText editText = (EditText) findViewById(R.id.text_field);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                            @Override
-                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                Photo photo = imageAdapter.getItem(position);
-                                                String title = photo.getTitle();
-                                                String url = photo.getUrl();
-                                                Intent intent = new Intent(ImageActivity.this, PhotoVerticale.class);
-                                                intent.putExtra(titleVertical, title);
-                                                intent.putExtra(urlVertical, url);
-                                                startActivity(intent);
-                                            }
-                                        }
-
-        );
-
+    private void buttonOK(final EditText editText) {
         Button button = (Button) findViewById(R.id.button_ok);
         button.setOnClickListener(new View.OnClickListener()
 
@@ -176,9 +102,104 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                   }
 
         );
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    private EditText listView() {
+        final ListView listView = (ListView) findViewById(R.id.list);
+        imageAdapter = new ImageAdapter(this);
+        listView.setAdapter(imageAdapter);
+
+        final EditText editText = (EditText) findViewById(R.id.text_field);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                Photo photo = imageAdapter.getItem(position);
+                                                String title = photo.getTitle();
+                                                String url = photo.getUrl();
+                                                Intent intent = new Intent(ImageActivity.this, PhotoVerticale.class);
+                                                intent.putExtra(titleVertical, title);
+                                                intent.putExtra(urlVertical, url);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+        );
+        return editText;
+    }
+
+    private void getButtonHistory(Button buttonSearch) {
+        Button buttonHistory = (Button) findViewById(R.id.button_history);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+
+                                            }
+                                        }
+        );
+    }
+
+    @NonNull
+    private Button getButtonSearch() {
+        Button buttonSearch = (Button) findViewById(R.id.button_search);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(View v) {
+
+                                            }
+                                        }
+        );
+        return buttonSearch;
+    }
+
+    private void Drawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+//                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+        };
+
+
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void spinner() {
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(spinnerKey, adapter.getItem(position).toString());
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        prefs = this.getPreferences(MODE_PRIVATE);
+
+        String getPrefs = prefs.getString(spinnerKey, "5");
+        spinner.setSelection(adapter.getPosition(getPrefs));
     }
 
     @Override
