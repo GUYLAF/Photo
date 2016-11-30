@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.*;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.guylaf.photos.R;
 
@@ -39,20 +39,35 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
     public static final String titleVertical = "Title" ;
     public static final String urlVertical = "URL" ;
     private static SharedPreferences getPr;
-    private BoundService boundService;
     boolean bound = false;
+    ActionBarDrawerToggle mDrawerToggle;
+    private BoundService boundService;
     private List<Photo> list = new ArrayList<>();
     private List<Photo> listOne = new ArrayList<>();
     private ImageAdapter imageAdapter;
     private DrawerLayout mDrawerLayout;
-    ActionBarDrawerToggle mDrawerToggle;
     private SharedPreferences prefs;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private com.google.android.gms.common.api.GoogleApiClient client;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            BoundService.ServiceBinder binder = (BoundService.ServiceBinder) service;
+            boundService = binder.getService();
+            bound = true;
+            boundService.setInterfaceResponse(ImageActivity.this);
+        }
 
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            bound = false;
+        }
+    };
+// Fin onCReate **************************************************************************************************
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +75,14 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         setContentView(R.layout.activity);
         Drawer();
         spinner();
-        Button buttonSearch = getButtonSearch();
-        getButtonHistory(buttonSearch);
+        getButtonSearch();
+        getButtonHistory();
         final EditText editText = listView();
         buttonOK(editText);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-// Fin onCReate **************************************************************************************************
 
     private void buttonOK(final EditText editText) {
         Button button = (Button) findViewById(R.id.button_ok);
@@ -80,9 +94,10 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                           if (!editText.getText().toString().equals("")) {
                                               Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
                                           }
+
                                           listOne.clear();
                                           list.clear();
-                                          boundService.getPhoto(editText.getText().toString());
+                                          boundService.getPhoto(editText.getText().toString(), prefs.getString(spinnerKey, "5"));
                                           final String photoSearch = editText.getText().toString();
 
                                           for (int i = 0; i < list.size(); i++) {
@@ -127,31 +142,34 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         return editText;
     }
 
-    private void getButtonHistory(Button buttonSearch) {
-        Button buttonHistory = (Button) findViewById(R.id.button_history);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
 
-
-                                            }
-                                        }
-        );
-    }
-
-    @NonNull
-    private Button getButtonSearch() {
+    private void getButtonSearch() {
         Button buttonSearch = (Button) findViewById(R.id.button_search);
         buttonSearch.setOnClickListener(new View.OnClickListener() {
 
                                             @Override
                                             public void onClick(View v) {
+                                                LinearLayout searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
+                                                searchLayout.setVisibility(View.VISIBLE);
 
                                             }
                                         }
         );
-        return buttonSearch;
+
     }
+
+    private void getButtonHistory() {
+        final Button buttonHistory = (Button) findViewById(R.id.button_history);
+        buttonHistory.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 LinearLayout searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
+                                                 searchLayout.setVisibility(View.INVISIBLE);
+                                             }
+                                         }
+        );
+    }
+
 
     private void Drawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -227,22 +245,6 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.disconnect();
     }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            BoundService.ServiceBinder binder = (BoundService.ServiceBinder) service;
-            boundService = binder.getService();
-            bound = true;
-            boundService.setInterfaceResponse(ImageActivity.this);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            bound = false;
-        }
-    };
 
     @Override
     public void onPhotoReceived(List<Photo> photos) {

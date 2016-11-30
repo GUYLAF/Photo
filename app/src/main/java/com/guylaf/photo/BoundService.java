@@ -53,7 +53,7 @@ public class BoundService extends Service {
         }
     }
 
-    public void getPhoto(String query) {
+    public void getPhoto(String query,String flickrPerPage) {
 //        List<PhotoDto> listphotos = new ArrayList<>();
 //        listphotos.add(new PhotoDto("28087377815", "67221971@N06", "80c8f2e753", "7308", 8, "t1", 1, 0, 0));//Monde Gris
 //        listphotos.add(new PhotoDto("27425564203", "67221971@N06", "8204d2863d", "7303", 8, "t2", 1, 0, 0));//L'Arbre Blanc
@@ -68,7 +68,7 @@ public class BoundService extends Service {
 
 //        return convertList;
 
-        Call<FlickrResponseDto> flickrPhotosResponseCall = service.getPhotos(query, getResources().getString(R.string.flickr_api_key));
+        Call<FlickrResponseDto> flickrPhotosResponseCall = service.getPhotos(query, getResources().getString(R.string.flickr_api_key),flickrPerPage);
 
         flickrPhotosResponseCall.enqueue(new Callback<FlickrResponseDto>() {
             @Override
