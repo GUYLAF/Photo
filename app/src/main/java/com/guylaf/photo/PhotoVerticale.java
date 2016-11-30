@@ -19,8 +19,8 @@ public class PhotoVerticale extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photoverticale);
-        String title = getIntent().getStringExtra("Title");
-        String url = getIntent().getStringExtra("URL");
+        String title = getIntent().getStringExtra(ImageActivity.titleVertical);
+        String url = getIntent().getStringExtra(ImageActivity.urlVertical);
         TextView displayTitle = (TextView) findViewById(R.id.titleVerticale);
         displayTitle.setText(title);
         TextView displayUrl = (TextView) findViewById(R.id.URLVerticale);

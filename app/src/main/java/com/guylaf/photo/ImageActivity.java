@@ -34,6 +34,9 @@ import java.util.List;
 
 public class ImageActivity extends AppCompatActivity implements InterfaceResponse {
 
+    public static final String spinnerKey = "key" ;
+    public static final String titleVertical = "Title" ;
+    public static final String urlVertical = "URL" ;
     private static SharedPreferences getPr;
     private BoundService boundService;
     boolean bound = false;
@@ -56,6 +59,7 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -84,7 +88,7 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("key",adapter.getItem(position).toString());
+                editor.putString(spinnerKey, adapter.getItem(position).toString());
                 editor.commit();
             }
 
@@ -95,6 +99,9 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         });
 
         prefs = this.getPreferences(MODE_PRIVATE);
+
+        String getPrefs = prefs.getString(spinnerKey, "5");
+        spinner.setSelection(adapter.getPosition(getPrefs));
 
 
         Button buttonSearch = (Button) findViewById(R.id.button_search);
@@ -130,8 +137,8 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                                 String title = photo.getTitle();
                                                 String url = photo.getUrl();
                                                 Intent intent = new Intent(ImageActivity.this, PhotoVerticale.class);
-                                                intent.putExtra("Title", title);
-                                                intent.putExtra("URL", url);
+                                                intent.putExtra(titleVertical, title);
+                                                intent.putExtra(urlVertical, url);
                                                 startActivity(intent);
                                             }
                                         }
