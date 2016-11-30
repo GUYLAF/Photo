@@ -1,12 +1,34 @@
 package com.guylaf.photo;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Created by guyla on 24/11/2016.
  */
-
-public class Photo {
+@Table(database = AppDatabase.class)
+public class Photo extends BaseModel {
+    @Column
     String title;
+    @Column
     String url;
+
+    @Column
+    @PrimaryKey(autoincrement = true)
+    private long id;
+
+    public Photo() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Photo(String title, String url) {
         this.title = title;

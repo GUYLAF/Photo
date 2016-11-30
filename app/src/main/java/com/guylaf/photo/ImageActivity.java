@@ -67,7 +67,7 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
             bound = false;
         }
     };
-// Fin onCReate **************************************************************************************************
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,8 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
+    // Fin onCReate **************************************************************************************************
+    
     private void buttonOK(final EditText editText) {
         Button button = (Button) findViewById(R.id.button_ok);
         button.setOnClickListener(new View.OnClickListener()
@@ -92,7 +93,8 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                       @Override
                                       public void onClick(View v) {
                                           if (!editText.getText().toString().equals("")) {
-                                              Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+//                                              Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                                              Toast.makeText(ImageActivity.this, prefs.getString(spinnerKey, "5"), Toast.LENGTH_SHORT).show();
                                           }
 
                                           listOne.clear();
@@ -123,7 +125,6 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         final ListView listView = (ListView) findViewById(R.id.list);
         imageAdapter = new ImageAdapter(this);
         listView.setAdapter(imageAdapter);
-
         final EditText editText = (EditText) findViewById(R.id.text_field);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
