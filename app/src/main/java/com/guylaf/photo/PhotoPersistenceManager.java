@@ -20,13 +20,6 @@ public class PhotoPersistenceManager {
         FlowManager.init(new FlowConfig.Builder(context).openDatabasesOnInit(true).build());
     }
 
-    /*public List<Photo> getPhotoByName(String string) {
-        return SQLite.select()
-                .from(Photo.class)
-                .where(Photo_Table.name.like(string + "%"))
-                .or(Photo_Table.name.like("%" + string + "%"))
-                .queryList();
-    }*/
 
     public void save(Photo photo) {
         try {
@@ -46,11 +39,11 @@ public class PhotoPersistenceManager {
         photo.delete();
     }
 
-    public List<Photo> getByUrl(String url) {
+    public Photo getByUrl(String url) {
         return SQLite.select()
                 .from(Photo.class)
                 .where(Photo_Table.url.eq(url))
-                .queryList();
+                .querySingle();
     }
 
 }

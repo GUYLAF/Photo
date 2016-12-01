@@ -24,23 +24,28 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.guylaf.photos.R;
 
+import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ImageActivity extends AppCompatActivity implements InterfaceResponse {
 
-    public static final String spinnerKey = "key" ;
-    public static final String titleVertical = "Title" ;
-    public static final String urlVertical = "URL" ;
+    public static final String spinnerKey = "key";
+    public static final String titleVertical = "Title";
+    public static final String urlVertical = "URL";
     private static SharedPreferences getPr;
     boolean bound = false;
     ActionBarDrawerToggle mDrawerToggle;
+    PhotoPersistenceManager photoPers;
     private BoundService boundService;
     private List<Photo> list = new ArrayList<>();
     private List<Photo> listOne = new ArrayList<>();
@@ -72,6 +77,7 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity);
         Drawer();
         spinner();
@@ -79,21 +85,22 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         getButtonHistory();
         final EditText editText = listView();
         buttonOK(editText);
+        photoPers = new PhotoPersistenceManager(this);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-    // Fin onCReate **************************************************************************************************
-    
+    // Fin onCReate **************************************************************************
+
+
     private void buttonOK(final EditText editText) {
         Button button = (Button) findViewById(R.id.button_ok);
-        button.setOnClickListener(new View.OnClickListener()
-
-                                  {
+        button.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
                                           if (!editText.getText().toString().equals("")) {
-//                                              Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(ImageActivity.this, editText.getText().toString(), Toast.LENGTH_SHORT).show();
                                               Toast.makeText(ImageActivity.this, prefs.getString(spinnerKey, "5"), Toast.LENGTH_SHORT).show();
                                           }
 
@@ -125,6 +132,8 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
         final ListView listView = (ListView) findViewById(R.id.list);
         imageAdapter = new ImageAdapter(this);
         listView.setAdapter(imageAdapter);
+
+
         final EditText editText = (EditText) findViewById(R.id.text_field);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
@@ -132,6 +141,10 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                                 Photo photo = imageAdapter.getItem(position);
                                                 String title = photo.getTitle();
                                                 String url = photo.getUrl();
+                                                Photo photo1 = photoPers.getByUrl(url);
+                                                if (photo1 == null) {
+                                                    photoPers.save(photo);
+                                                }
                                                 Intent intent = new Intent(ImageActivity.this, PhotoVerticale.class);
                                                 intent.putExtra(titleVertical, title);
                                                 intent.putExtra(urlVertical, url);
@@ -152,7 +165,11 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                             public void onClick(View v) {
                                                 LinearLayout searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
                                                 searchLayout.setVisibility(View.VISIBLE);
-
+                                                mDrawerLayout.closeDrawers();
+//                                                LinearLayout imageLayout = (LinearLayout) findViewById(R.id.activity_image);
+//                                                searchLayout.setVisibility(View.VISIBLE);
+//                                                LinearLayout drawerLayout = (LinearLayout) findViewById(R.id.left_drawer);
+//                                                drawerLayout.setVisibility(View.INVISIBLE);
                                             }
                                         }
         );
@@ -162,10 +179,17 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
     private void getButtonHistory() {
         final Button buttonHistory = (Button) findViewById(R.id.button_history);
         buttonHistory.setOnClickListener(new View.OnClickListener() {
+
                                              @Override
                                              public void onClick(View v) {
                                                  LinearLayout searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
-                                                 searchLayout.setVisibility(View.INVISIBLE);
+                                                 searchLayout.setVisibility(View.GONE);
+//                                                 LinearLayout imageLayout = (LinearLayout) findViewById(R.id.activity_image);
+//                                                 imageLayout.setVisibility(View.VISIBLE);
+                                                 imageAdapter.setList(photoPers.getAll());
+                                                 imageAdapter.notifyDataSetChanged();
+                                                 mDrawerLayout.closeDrawers();
+
                                              }
                                          }
         );
@@ -295,15 +319,6 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                 .build();
     }
 
-
-//    public void onButtonSearch() {
-//
-//    }
-//
-//
-//    public void onButtonHistory() {
-//
-//    }
 
 }
 

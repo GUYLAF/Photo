@@ -27,8 +27,9 @@ public class ImageAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setList(List<Photo> list) {
+    public List<Photo> setList(List<Photo> list) {
         this.list = list;
+        return list;
     }
 
     public Photo getList(int position) {
@@ -75,6 +76,7 @@ public class ImageAdapter extends BaseAdapter {
             public void onClick(View v) {
                 list.remove(list.get(position));
                 notifyDataSetChanged();
+
             }
         });
 
