@@ -168,6 +168,7 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                                 mDrawerLayout.closeDrawers();
                                                 imageAdapter.setList(new ArrayList<Photo>());
                                                 imageAdapter.notifyDataSetChanged();
+                                                imageAdapter.setHisto(false);
 //                                                LinearLayout imageLayout = (LinearLayout) findViewById(R.id.activity_image);
 //                                                searchLayout.setVisibility(View.VISIBLE);
 //                                                LinearLayout drawerLayout = (LinearLayout) findViewById(R.id.left_drawer);
@@ -189,6 +190,10 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                                  imageAdapter.setList(photoPers.getAll());
                                                  imageAdapter.notifyDataSetChanged();
                                                  mDrawerLayout.closeDrawers();
+                                                 imageAdapter.setHisto(true);
+//                                                 SharedPreferences.Editor editor = prefs.edit();
+//                                                 editor.putString(, adapter.getItem(position).toString());
+//                                                 editor.commit();
                                              }
                                          }
         );

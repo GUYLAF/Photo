@@ -22,9 +22,18 @@ import java.util.List;
 public class ImageAdapter extends BaseAdapter {
     private List<Photo> list = new ArrayList<>();
     private Context context;
+    private boolean isHisto = false;
 
     public ImageAdapter(Context context) {
         this.context = context;
+    }
+
+    public boolean isHisto() {
+        return isHisto;
+    }
+
+    public void setHisto(boolean histo) {
+        isHisto = histo;
     }
 
     public List<Photo> setList(List<Photo> list) {
@@ -65,7 +74,7 @@ public class ImageAdapter extends BaseAdapter {
         url.setText(list.get(position).getUrl());
 
         ImageView image = (ImageView) convertView.findViewById(R.id.img);
-        Picasso.with(parent.getContext()).load(list.get(position).getUrl()).resize(250,250).into(image);
+        Picasso.with(parent.getContext()).load(list.get(position).getUrl()).resize(250, 250).into(image);
 
         FloatingActionButton buttonSupp = (FloatingActionButton) convertView.findViewById(R.id.supp);
         buttonSupp.setFocusable(false);
@@ -74,8 +83,13 @@ public class ImageAdapter extends BaseAdapter {
         buttonSupp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (isHisto) {
+                    PhotoPersistenceManager photoPersistenceManager = new PhotoPersistenceManager(context);
+                    photoPersistenceManager.delete(getItem(position));
+                }
                 list.remove(list.get(position));
                 notifyDataSetChanged();
+
 
             }
         });
