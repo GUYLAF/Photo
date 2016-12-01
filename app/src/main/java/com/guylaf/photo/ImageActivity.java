@@ -166,6 +166,8 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                                 LinearLayout searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
                                                 searchLayout.setVisibility(View.VISIBLE);
                                                 mDrawerLayout.closeDrawers();
+                                                imageAdapter.setList(new ArrayList<Photo>());
+                                                imageAdapter.notifyDataSetChanged();
 //                                                LinearLayout imageLayout = (LinearLayout) findViewById(R.id.activity_image);
 //                                                searchLayout.setVisibility(View.VISIBLE);
 //                                                LinearLayout drawerLayout = (LinearLayout) findViewById(R.id.left_drawer);
@@ -184,12 +186,9 @@ public class ImageActivity extends AppCompatActivity implements InterfaceRespons
                                              public void onClick(View v) {
                                                  LinearLayout searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
                                                  searchLayout.setVisibility(View.GONE);
-//                                                 LinearLayout imageLayout = (LinearLayout) findViewById(R.id.activity_image);
-//                                                 imageLayout.setVisibility(View.VISIBLE);
                                                  imageAdapter.setList(photoPers.getAll());
                                                  imageAdapter.notifyDataSetChanged();
                                                  mDrawerLayout.closeDrawers();
-
                                              }
                                          }
         );
